@@ -1,0 +1,54 @@
+* {
+	box-sizing:  border-box;
+}
+
+.game-title {
+	font-size: 2.5rem;
+	text-align: center;
+}
+
+table {
+	border: 1px solid black;
+	width: 500px;
+	height: 400px;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+
+tr {
+	background:  blue;
+}
+
+td {
+	width: 70px;
+	height: 70px;
+	padding: 0 10px;
+	border-collapse: collapse;
+}
+
+.clear-row {
+	background: white;
+	border: 1px solid white;
+}
+
+.clear-row .chip {
+	border: none;
+}
+
+.chip {
+	width: 50px;
+	height: 50px;
+	background: white;
+	display: inline-block;
+	margin: 0 auto;
+	border: 1px solid black;
+	border-radius: 100%;
+	cursor: pointer;
+}
+
+.player-one-chip {
+	background: red;
+}
+.player-two-chip {
+	background: yellow;
+}
