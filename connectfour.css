@@ -2,13 +2,62 @@
 	box-sizing:  border-box;
 }
 
+body {
+	background: #C4BCBA;
+}
+
+.title-container {
+ width: 100%;
+}
+
 .game-title {
 	font-size: 2.5rem;
 	text-align: center;
+	margin: 0;
+}
+.hubs-container {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+}
+
+.player-hub {
+}
+
+.player-hub h2,
+.player-hub h4 {
+	margin: 0;
+}
+
+.player-two-hub {
+	text-align: right;
+}
+
+#new-game-button {
+	width: 10%;
+	height: 3rem;
+	margin: 0;
+	color: #e8e2db;
+	background:  #1a3263; 
+	display: inline-block;
+	vertical-align: top;
+	border: none;
+	border-radius: 5px; 
+	font-size: 1rem;
+	outline: none;
+	cursor: pointer;
+
+}
+
+.board-holder {
+	width: 650px;
+	height: 560px;
+	background: #e8e2db;
+	margin: 0 auto;
 }
 
 table {
-	border: 1px solid black;
+	/*border: 1px solid black;*/
 	width: 500px;
 	height: 400px;
 	margin: 0 auto;
@@ -16,7 +65,7 @@ table {
 }
 
 tr {
-	background:  blue;
+	background:  #1a3263;
 }
 
 td {
@@ -27,12 +76,13 @@ td {
 }
 
 .clear-row {
-	background: white;
-	border: 1px solid white;
+	background: transparent;
+	/*border: 1px solid white;*/
 }
 
 .clear-row .chip {
 	border: none;
+	background: transparent;
 }
 
 .chip {
@@ -47,8 +97,34 @@ td {
 }
 
 .player-one-chip {
-	background: red;
+	background: #f5564e;
 }
 .player-two-chip {
-	background: yellow;
+	background: #fab95b;
+}
+
+.player-one-background {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f5564e+0,f5564e+49,e8e2db+49,e8e2db+51,e8e2db+51,e8e2db+100 */
+	background: #f5564e; /* Old browsers */
+	background: -moz-linear-gradient(-45deg, #f5564e 0%, #f5564e 50%, #e8e2db 50%, #e8e2db 50%, #e8e2db 50%, #e8e2db 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, #f5564e 0%,#f5564e 50%,#e8e2db 50%,#e8e2db 50%,#e8e2db 50%,#e8e2db 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, #f5564e 0%,#f5564e 50%,#e8e2db 50%,#e8e2db 50%,#e8e2db 50%,#e8e2db 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5564e', endColorstr='#e8e2db',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.player-two-background {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e8e2db+0,e8e2db+49,fab95b+50,fab95b+100 */
+background: #e8e2db; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #e8e2db 0%, #e8e2db 50%, #fab95b 50%, #fab95b 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #e8e2db 0%,#e8e2db 50%,#fab95b 50%,#fab95b 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #e8e2db 0%,#e8e2db 50%,#fab95b 50%,#fab95b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e2db', endColorstr='#fab95b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.player-one-win-bg {
+	background: #f5564e;
+}
+
+.player-two-win-bg {
+	background: #fab95b ;
 }
