@@ -1,9 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Chettan|Roboto:400,700');
+
 * {
 	box-sizing:  border-box;
 }
 
 body {
-	background: #C4BCBA;
+	margin: 0;
+	background: center / cover no-repeat url('img/paul-hanaoka-299941-unsplash.jpg');
+	color: white;
+}
+
+.wrapper {
+	width: 50%;
+	min-width: 800px;
+	margin: 1.5rem auto 0 auto;
+	padding: 1rem 0;
+	background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8) );
 }
 
 .title-container {
@@ -14,14 +26,26 @@ body {
 	font-size: 2.5rem;
 	text-align: center;
 	margin: 0;
+	letter-spacing: 0.5rem;
+	font-family: 'Baloo Chettan';
 }
 .hubs-container {
+	width: 650px;
+	margin: 0 auto;
+	padding: 0.5rem 0;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
+	font-family: 'Roboto';
 }
 
-.player-hub {
+.player-hub h2, 
+.player-hub h4 {
+	font-weight: normal;
+}
+
+.player-hub .highlighted {
+	font-weight: bold;
 }
 
 .player-hub h2,
@@ -34,7 +58,7 @@ body {
 }
 
 #new-game-button {
-	width: 10%;
+	width: 15%;
 	height: 3rem;
 	margin: 0;
 	color: #e8e2db;
@@ -54,13 +78,15 @@ body {
 	height: 560px;
 	background: #e8e2db;
 	margin: 0 auto;
+	padding-top: 0.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-table {
-	/*border: 1px solid black;*/
+.board {
 	width: 500px;
 	height: 400px;
-	margin: 0 auto;
 	border-collapse: collapse;
 }
 
@@ -100,6 +126,13 @@ td {
 	background: #f5564e;
 }
 .player-two-chip {
+	background: #fab95b;
+}
+
+.player-one-top-row .chip:hover {
+	background: #f5564e;
+}
+.player-two-top-row .chip:hover {
 	background: #fab95b;
 }
 
