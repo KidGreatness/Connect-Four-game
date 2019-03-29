@@ -39,6 +39,10 @@ body {
 	font-family: 'Roboto';
 }
 
+.player-hub {
+	width: 40%;
+}
+
 .player-hub h2, 
 .player-hub h4 {
 	font-weight: normal;
@@ -99,16 +103,6 @@ td {
 	height: 70px;
 	padding: 0 10px;
 	border-collapse: collapse;
-}
-
-.clear-row {
-	background: transparent;
-	/*border: 1px solid white;*/
-}
-
-.clear-row .chip {
-	border: none;
-	background: transparent;
 }
 
 .chip {

@@ -6,7 +6,7 @@ var playerOneWins = 0;
 var playerTwoWins = 0;
 var playerOneLosses = 0;
 var playerTwoLosses = 0;
-var playerOneTurnCount = 0;
+var playerOneTurnCount = 1;
 var playerTwoTurnCount = 0;
 var playerOneMatchingChipsHor = 0;
 var playerTwoMatchingChipsHor = 0;
@@ -14,21 +14,27 @@ var playerOneMatchingChipsVer = 0;
 var playerTwoMatchingChipsVer = 0;
 var gameEnded;
 
+
+//CSS String Variables
 var playerOneChipClass = 'player-one-chip';
 var playerTwoChipClass = 'player-two-chip';
 var playerOneWinBGClass = 'player-one-win-bg';
 var playerTwoWinBGClass = 'player-two-win-bg';
-
+var playerOneTitleText = 'Player 1';
+var playerTwoTitleText = 'Player 2';
+var playerOneWinText = 'Player 1 Wins';
+var playerTwoWinText = 'Player 2 Wins';
 var playerTwoBackgroundClass = 'player-two-background';
 var playerTwoTopRowClass = 'player-two-top-row';
 var highlightedClass ='highlighted';
-
 var defaultBoardClassese = 'board-holder player-one-background';
 var defaultPlayerHubClasses = '';
 
+// Chips Node List
 var chips = document.getElementsByClassName('chip');
 var lastChipLocation = chips.length - 1;
 
+//Objects of CSS Elements
 var DOMstrings = {
 	boardHolder: document.querySelector('.board-holder'),
 	board: document.querySelector('.board'),
@@ -42,68 +48,59 @@ var DOMstrings = {
 	playerTwoLossesID: document.getElementById('player-two-losses')
 };
 
-DOMstrings.newGameButton.addEventListener('click', newGame);
-DOMstrings.board.addEventListener('click', function(event) {
-	var holeClicked;
+function dropChip(hole) {
+	var column = grid[hole].columnID;
+	var holesArr = [];
 
-	holeClicked = parseInt(event.target.classList[1]);
-	
-	if (gameEnded !== true) {
-			
-			if (Number.isInteger(holeClicked)) {
-				PlayerTurn();
-				placeMoveInGrid(selectColumns(holeClicked));
-				winClause();
-				winClauseDiagonal();
-			}	
-	}		
-});
+	var addTime = 0;
+	var removeTime = 50;
 
-var grid = {};
-var columnTopArr = [6,5,4,3,2,1,0];
-var columnBottomsArr = [41,40,39,38,37,36,35];
-
-var Hole = function (hole, chip, classListNumber, columnID) {
-	this.hole = hole;
-	this.chip = chip;
-	this.playerChipInHole = 0;
-	this.chip.classList.add(classListNumber);
-	this.columnID = columnID;
-	this.isFilled = false;
-}
-
-for(var x = 0; x < 7; x++) {
-	for (var i = lastChipLocation; i >= 0; i = i - 7) {
-		var currentHoleStr = String(i - x);
-
-		var	currentHoleObj = new Hole (Number(currentHoleStr),chips[i - x], i - x, x);
-
-		grid[currentHoleStr] = currentHoleObj;
+	for (var i = columnTopArr[column]; i < columnBottomsArr[column]; i = i + 7) {
+			holesArr.push(i);
 	}
-}
+
+	
+	holesArr.forEach(function(cur) {
+		setTimeout(function() {
+			chips[cur].classList.add(playerOneTurn === true ? playerOneChipClass : playerTwoChipClass);
+		}, addTime);
+		
+
+		setTimeout(function() {
+			chips[cur].classList.remove(playerOneTurn === true ? playerOneChipClass : playerTwoChipClass);
+		}, removeTime);
+		removeTime  += 50;
+		addTime  += 50;
+	});
+
+	return addTime;
+} 
 
 function selectColumns(hole) {
 	var currentHoleClicked = grid[hole];
 	var lastMove = columnBottomsArr[currentHoleClicked.columnID];
+	
+		if (columnBottomsArr[currentHoleClicked.columnID] >= 0) {
+			if (playerOneTurn == true) {
+					chips[columnBottomsArr[currentHoleClicked.columnID]].classList.add(playerOneChipClass);
+			}
+			else {
+					chips[columnBottomsArr[currentHoleClicked.columnID]].classList.add(playerTwoChipClass);
+			}
 
-	if (columnBottomsArr[currentHoleClicked.columnID] >= 0) {
-		if (playerOneTurn == true) {
-				chips[columnBottomsArr[currentHoleClicked.columnID]].classList.add(playerOneChipClass);
+			columnBottomsArr[currentHoleClicked.columnID] = columnBottomsArr[currentHoleClicked.columnID] - 7;
+			return lastMove;
 		}
 		else {
-			chips[columnBottomsArr[currentHoleClicked.columnID]].classList.add(playerTwoChipClass);	
+			alert("Column full. Select another column");
 		}
-
-		columnBottomsArr[currentHoleClicked.columnID] = columnBottomsArr[currentHoleClicked.columnID] - 7;
-		return lastMove;
-	}
-	else {
-		alert("Column full. Select another column");
-	}
+	
 }
 
 function PlayerTurn() {
-	if (playerOneTurnCount == playerTwoTurnCount) {
+
+	if (playerOneTurnCount == playerTwoTurnCount && gameEnded !== true) {
+
 		playerOneTurn = true;
 		playerTwoTurn = false;
 		DOMstrings.boardHolder.classList.toggle(playerTwoBackgroundClass);
@@ -112,7 +109,7 @@ function PlayerTurn() {
 		DOMstrings.playerTwoTitle.classList.toggle(highlightedClass);
 		playerOneTurnCount ++;
 	}
-	else {
+	else if(playerOneTurnCount != playerTwoTurnCount && gameEnded !== true) {
 		playerTwoTurn = true;
 		playerOneTurn = false;
 		DOMstrings.boardHolder.classList.toggle(playerTwoBackgroundClass);
@@ -374,24 +371,30 @@ function gameOver() {
 		DOMstrings.playerOneWinsID.textContent = ++playerOneWins;
 		DOMstrings.playerTwoLossesID.textContent = ++playerTwoLosses;
 		DOMstrings.boardHolder.classList.add(playerOneWinBGClass);
+		DOMstrings.playerOneTitle.innerText = playerOneWinText;
 	} else if (playerTwoTurn === true) {
 		DOMstrings.playerTwoWinsID.textContent = ++playerTwoWins;
 		DOMstrings.playerOneLossesID.textContent = ++playerOneLosses;
 		DOMstrings.boardHolder.classList.add(playerTwoWinBGClass);
+		DOMstrings.playerTwoTitle.innerText = playerTwoWinText;
 	}
+
+	return gameEnded;
 }
 
 function newGame() {
 	columnBottomsArr = [41,40,39,38,37,36,35];
-	playerOneTurn = false;
+	playerOneTurn = true;
 	playerTwoTurn = false;
-	playerOneTurnCount = 0;
+	playerOneTurnCount = 1;
 	playerTwoTurnCount = 0;
 	gameEnded = false;
 
 	DOMstrings.boardHolder.classList.value = defaultBoardClassese;
 	DOMstrings.playerOneTitle.classList.value = highlightedClass;
 	DOMstrings.playerTwoTitle.classList.value = '';
+	DOMstrings.playerOneTitle.innerText = playerOneTitleText;
+	DOMstrings.playerTwoTitle.innerText = playerTwoTitleText;
 	DOMstrings.topRow.classList.remove(playerTwoTopRowClass);
 	
 	for(var x = 0; x < 7; x++) {
@@ -402,3 +405,50 @@ function newGame() {
 	}
 }
 
+// Reset the board
+DOMstrings.newGameButton.addEventListener('click', newGame);
+
+/* Add an event listener on every holes. Controls chip placement, player turn, and
+verify if a player won */
+DOMstrings.board.addEventListener('click', function(event) {
+	var holeClicked;
+	var secondsWait;
+
+	holeClicked = parseInt(event.target.classList[1]);
+	
+	if (gameEnded !== true) {
+			
+			if (Number.isInteger(holeClicked)) {
+				secondsWait = dropChip(holeClicked);
+				
+				setTimeout( function() {
+					placeMoveInGrid(selectColumns(holeClicked));
+					winClause();
+					winClauseDiagonal();
+					PlayerTurn();
+				}, secondsWait);
+			}	
+	}		
+});
+
+var grid = {};
+var columnTopArr = [6,5,4,3,2,1,0];
+var columnBottomsArr = [41,40,39,38,37,36,35];
+
+var Hole = function (hole, chip, classListNumber, columnID) {
+	this.hole = hole;
+	this.chip = chip;
+	this.playerChipInHole = 0;
+	this.chip.classList.add(classListNumber);
+	this.columnID = columnID;
+}
+
+for(var x = 0; x < 7; x++) {
+	for (var i = lastChipLocation; i >= 0; i = i - 7) {
+		var currentHoleStr = String(i - x);
+
+		var	currentHoleObj = new Hole (Number(currentHoleStr),chips[i - x], i - x, x);
+
+		grid[currentHoleStr] = currentHoleObj;
+	}
+}
